@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, InputGroup, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Login.css'; 
+import './Login.css';
+import { useHistory } from 'react-router-dom';
+import  Home from '../pages/Home';
+
+
+
 
 const Login = () => {
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -32,16 +41,18 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       setIsSubmitting(true);
-      
+
       setTimeout(() => {
         setIsSubmitting(false);
-        Alert.success('Login successful!', { position: 'top-right' });
+        setSuccessMessage('Login successful!');
+        history.push('/');
       }, 1500);
     }
   };
+
 
   return (
     <Container className="login-container">
@@ -78,8 +89,8 @@ const Login = () => {
                 isInvalid={!!errors.password}
                 className="form-control-lg"
               />
-              <Button 
-                variant="outline-secondary" 
+              <Button
+                variant="outline-secondary"
                 onClick={() => setShowPassword(!showPassword)}
                 className="password-toggle"
               >
@@ -94,9 +105,9 @@ const Login = () => {
             </div>
           </Form.Group>
 
-          <Button 
-            variant="primary" 
-            type="submit" 
+          <Button
+            variant="primary"
+            type="submit"
             className="w-100 login-btn"
             disabled={isSubmitting}
           >
@@ -107,11 +118,16 @@ const Login = () => {
               </>
             ) : 'Login'}
           </Button>
+          {successMessage && (
+            <Alert variant="success" className="mt-3">
+              {successMessage}
+            </Alert>
+          )}
         </Form>
 
-       <div className="login-footer mt-4 text-center">
-  <p className="text-muted">Don't have an account? <Link to="/register">Sign up</Link></p>
-</div>
+        <div className="login-footer mt-4 text-center">
+          <p className="text-muted" style={{ color: '#e0e0e0' }}>Don't have an account? <Link to="/register">Sign up</Link></p>
+        </div>
       </div>
     </Container>
   );

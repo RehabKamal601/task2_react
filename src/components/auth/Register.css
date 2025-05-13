@@ -1,56 +1,166 @@
 .register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-    padding: 20px;
-  }
-  
+  background-color: #1a1a1a; /* نفس خلفية movie-details-container و login-container */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-card {
+  background-color: #2a2a2a; /* نفس لون login-card و movie-details-card */
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  max-width: 500px; /* أوسع قليلاً من Login لاستيعاب الحقول الإضافية */
+  width: 100%;
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1); /* نفس تأثير hover في الصفحات الأخرى */
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.register-header h2 {
+  color: #e0e0e0;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.register-header p {
+  color: #d0d0d0;
+  font-size: 1rem;
+}
+
+.form-label {
+  color: #e0e0e0; /* لون أبيض فاتح لنصوص الـ labels فوق الحقول */
+}
+
+.form-control {
+  background-color: #3a3a3a; /* خلفية داكنة للحقول */
+  border: 1px solid #4a4a4a;
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  background-color: #3a3a3a;
+  border-color: #1e90ff; /* لون مميز عند التركيز */
+  box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+  color: #e0e0e0;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545; /* لون الخطأ */
+}
+
+.form-control.is-valid {
+  border-color: #28a745; /* لون النجاح */
+}
+
+.form-control-feedback {
+  color: #dc3545;
+  font-size: 0.9rem;
+}
+
+.form-control-feedback.valid {
+  color: #28a745;
+}
+
+.alert-success {
+  background-color: #2a2a2a;
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.alert-success .btn-close {
+  filter: invert(1); /* لضمان رؤية زر الإغلاق في الثيم الداكن */
+}
+
+.password-toggle {
+  background-color: #3a3a3a;
+  border: 1px solid #4a4a4a;
+  color: #e0e0e0;
+}
+
+.password-toggle:hover {
+  background-color: #4a4a4a;
+  color: #1e90ff;
+}
+
+.register-btn {
+  background-color: #1e90ff; /* لون زر مشابه لـ login-btn */
+  border: none;
+  font-size: 1.1rem;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #007bff;
+}
+
+.register-btn:disabled {
+  background-color: #4a4a4a;
+  cursor: not-allowed;
+}
+
+.register-footer a {
+  color: #1e90ff;
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+.text-muted {
+  color: #d0d0d0 !important; /* لضمان التناسق مع الثيم */
+}
+
+.text-muted a {
+  color: #1e90ff;
+}
+
+.text-muted a:hover {
+  text-decoration: underline;
+}
+
+/* التصميم المتجاوب */
+@media (max-width: 600px) {
   .register-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    padding: 40px;
-    width: 100%;
-    max-width: 600px;
+    padding: 20px;
+    max-width: 90%;
   }
-  
+
+  .register-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .register-header p {
+    font-size: 0.9rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem; /* تقليل حجم النص للـ labels على الشاشات الصغيرة */
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+  }
+
   .register-btn {
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    background-color: #28a745;
-    border: none;
-    transition: all 0.3s;
+    font-size: 1rem;
+  }
+
+  .alert-success {
+    font-size: 0.9rem;
   }
   
-  .register-btn:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-  }
-  
-  .register-btn:active {
-    transform: translateY(0);
-  }
-  
-  .password-toggle {
-    border-radius: 0 8px 8px 0;
-    border-left: none;
-  }
-  
-  .password-toggle:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .form-control-lg {
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid #dfe6e9;
-  }
-  
-  .form-control-lg:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
-  }
+}

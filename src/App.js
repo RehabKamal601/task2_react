@@ -1,5 +1,5 @@
 import './App.css';
-import Register from './components/auth/register';
+import Register from './components/auth/Register';
 import Login from './components/auth/login';
 import home from './components/pages/Home';
 import MovieDetails from './components/pages/MovieDetails';
