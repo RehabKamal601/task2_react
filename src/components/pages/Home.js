@@ -1,17 +1,20 @@
-
-
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite } from '../Redux/favoritesActions';
 import axios from '../../axiosInstance';
 import { Link } from 'react-router-dom';
 import { Form, FormControl, InputGroup, Button } from 'react-bootstrap';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import Navbar from '../auth/Navbar';
-import './Home.css'; 
+import './Home.css';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
+  const dispatch = useDispatch();
+  const favorites = useSelector(state => state.favorites.favorites);
 
   useEffect(() => {
     axios.get('/movie/popular')
@@ -29,6 +32,14 @@ const Home = () => {
 
   const handleGenreChange = (e) => {
     setSelectedGenre(e.target.value);
+  };
+
+  const toggleFavorite = (movie) => {
+    if (favorites.some(fav => fav.id === movie.id)) {
+      dispatch(removeFavorite(movie.id));
+    } else {
+      dispatch(addFavorite(movie));
+    }
   };
 
   const filteredMovies = movies.filter(movie => {
@@ -54,9 +65,9 @@ const Home = () => {
           </Button>
         </InputGroup>
 
-        <Form.Select 
-          value={selectedGenre} 
-          onChange={handleGenreChange} 
+        <Form.Select
+          value={selectedGenre}
+          onChange={handleGenreChange}
           className="genre-filter"
         >
           <option value="">All Genres</option>
@@ -71,12 +82,22 @@ const Home = () => {
           filteredMovies.map(movie => (
             <Link to={`/movie/${movie.id}`} key={movie.id} className="movie-card">
               <div className="movie-card-content">
-                <img 
-                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} 
-                  alt={movie.title} 
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  alt={movie.title}
                   className="movie-poster"
                 />
                 <h3 className="movie-title">{movie.title}</h3>
+                <div
+                  className={`favorite-icon ${favorites.some(fav => fav.id === movie.id) ? 'favorited' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleFavorite(movie);
+                  }}
+                  aria-label={favorites.some(fav => fav.id === movie.id) ? 'Remove from favorites' : 'Add to favorites'}
+                >
+                  {favorites.some(fav => fav.id === movie.id) ? <FaHeart /> : <FaRegHeart />}
+                </div>
               </div>
             </Link>
           ))
